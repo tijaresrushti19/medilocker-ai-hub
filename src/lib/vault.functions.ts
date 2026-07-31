@@ -118,7 +118,7 @@ export const saveDocument = createServerFn({ method: "POST" })
         mime_type: data.mimeType,
         doc_date: extracted.doc_date,
         ai_summary: extracted.summary,
-        extracted: extracted as unknown as Record<string, unknown>,
+        extracted: JSON.parse(JSON.stringify(extracted)),
         status: "ready",
       })
       .select()
