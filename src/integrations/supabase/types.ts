@@ -14,7 +14,240 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      documents: {
+        Row: {
+          ai_summary: string | null
+          created_at: string
+          doc_date: string | null
+          doc_type: string
+          extracted: Json
+          id: string
+          mime_type: string | null
+          owner_id: string
+          profile_id: string
+          status: string
+          storage_path: string
+          title: string
+        }
+        Insert: {
+          ai_summary?: string | null
+          created_at?: string
+          doc_date?: string | null
+          doc_type?: string
+          extracted?: Json
+          id?: string
+          mime_type?: string | null
+          owner_id: string
+          profile_id: string
+          status?: string
+          storage_path: string
+          title: string
+        }
+        Update: {
+          ai_summary?: string | null
+          created_at?: string
+          doc_date?: string | null
+          doc_type?: string
+          extracted?: Json
+          id?: string
+          mime_type?: string | null
+          owner_id?: string
+          profile_id?: string
+          status?: string
+          storage_path?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "documents_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "patient_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      patient_profiles: {
+        Row: {
+          created_at: string
+          date_of_birth: string | null
+          full_name: string
+          id: string
+          is_primary: boolean
+          notes: string | null
+          owner_id: string
+          relationship: string
+          sex: string | null
+        }
+        Insert: {
+          created_at?: string
+          date_of_birth?: string | null
+          full_name: string
+          id?: string
+          is_primary?: boolean
+          notes?: string | null
+          owner_id: string
+          relationship?: string
+          sex?: string | null
+        }
+        Update: {
+          created_at?: string
+          date_of_birth?: string | null
+          full_name?: string
+          id?: string
+          is_primary?: boolean
+          notes?: string | null
+          owner_id?: string
+          relationship?: string
+          sex?: string | null
+        }
+        Relationships: []
+      }
+      share_links: {
+        Row: {
+          created_at: string
+          doctor_name: string | null
+          document_ids: string[]
+          expires_at: string
+          id: string
+          include_timeline: boolean
+          last_viewed_at: string | null
+          owner_id: string
+          profile_id: string
+          revoked: boolean
+          token: string
+        }
+        Insert: {
+          created_at?: string
+          doctor_name?: string | null
+          document_ids?: string[]
+          expires_at: string
+          id?: string
+          include_timeline?: boolean
+          last_viewed_at?: string | null
+          owner_id: string
+          profile_id: string
+          revoked?: boolean
+          token: string
+        }
+        Update: {
+          created_at?: string
+          doctor_name?: string | null
+          document_ids?: string[]
+          expires_at?: string
+          id?: string
+          include_timeline?: boolean
+          last_viewed_at?: string | null
+          owner_id?: string
+          profile_id?: string
+          revoked?: boolean
+          token?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "share_links_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "patient_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      symptom_checks: {
+        Row: {
+          advice: Json
+          created_at: string
+          id: string
+          owner_id: string
+          profile_id: string
+          summary: string | null
+          symptoms: string
+          urgency: string | null
+        }
+        Insert: {
+          advice?: Json
+          created_at?: string
+          id?: string
+          owner_id: string
+          profile_id: string
+          summary?: string | null
+          symptoms: string
+          urgency?: string | null
+        }
+        Update: {
+          advice?: Json
+          created_at?: string
+          id?: string
+          owner_id?: string
+          profile_id?: string
+          summary?: string | null
+          symptoms?: string
+          urgency?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "symptom_checks_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "patient_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      timeline_events: {
+        Row: {
+          category: string
+          created_at: string
+          detail: string | null
+          document_id: string | null
+          event_date: string | null
+          id: string
+          label: string
+          owner_id: string
+          profile_id: string
+          value: string | null
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          detail?: string | null
+          document_id?: string | null
+          event_date?: string | null
+          id?: string
+          label: string
+          owner_id: string
+          profile_id: string
+          value?: string | null
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          detail?: string | null
+          document_id?: string | null
+          event_date?: string | null
+          id?: string
+          label?: string
+          owner_id?: string
+          profile_id?: string
+          value?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "timeline_events_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "timeline_events_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "patient_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
